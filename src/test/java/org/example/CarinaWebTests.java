@@ -42,7 +42,7 @@ public class CarinaWebTests implements IAbstractTest {
     }
 
     @Test
-    public void carinaLabelOnHeader() {
+    public void carinaLabelIsOnHeaderTest() {
         String expectedLabelText = "Carina";
 
         homePage.open();
@@ -94,7 +94,7 @@ public class CarinaWebTests implements IAbstractTest {
     }
 
     @Test
-    public void subLinksForAutomationArePresent() {
+    public void subLinksForAutomationArePresentTest() {
         int expectedNumberOfSubLinks = 4;
 
         homePage.open();
@@ -109,7 +109,7 @@ public class CarinaWebTests implements IAbstractTest {
     }
 
     @Test
-    public void subLinksForAdvancedArePresent() {
+    public void subLinksForAdvancedArePresentTest() {
         int expectedNumberOfSubLinks = 9;
 
         homePage.open();
@@ -124,7 +124,7 @@ public class CarinaWebTests implements IAbstractTest {
     }
 
     @Test
-    public void subLinksForIntegrationArePresent() {
+    public void subLinksForIntegrationArePresentTest() {
         int expectedNumberOfSubLinks = 1;
 
         homePage.open();
