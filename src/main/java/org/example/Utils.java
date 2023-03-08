@@ -28,4 +28,9 @@ public class Utils {
                 .executeScript("return document.readyState")
                 .equals("complete"));
     }
+
+    public static void scrollToBottom(WebDriver driver) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("window.scrollBy(0,document.body.scrollHeight)", "");
+    }
 }

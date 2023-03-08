@@ -57,4 +57,16 @@ public class CarinaWebTests implements IAbstractTest {
         assertThat(isCurrentPageLoaded(getDriver())).isTrue();
         assertThat(getDriver().getCurrentUrl()).isEqualTo(expectedGithubUrl);
     }
+
+    @Test
+    public void headerIsStickyTest() {
+        homePage.open();
+
+        assertThat(homePage.isHeaderSticky()).isTrue();
+
+        Utils.scrollToBottom(getDriver());
+
+        assertThat(homePage.getHeader().isUIObjectPresent()).isTrue();
+        assertThat(homePage.isHeaderSticky()).isTrue();
+    }
 }

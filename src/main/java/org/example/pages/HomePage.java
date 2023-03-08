@@ -4,6 +4,7 @@ import com.qaprosoft.carina.core.gui.AbstractPage;
 import lombok.Getter;
 import org.example.components.Content;
 import org.example.components.Header;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.FindBy;
 
@@ -18,5 +19,16 @@ public class HomePage extends AbstractPage {
 
     public HomePage(WebDriver driver) {
         super(driver);
+    }
+
+    public boolean isHeaderSticky() {
+        long windowOffsetFromTop = getWindowOffsetFromTop();
+        int yOfHeader = header.getRootExtendedElement().getLocation().getY();
+        return Math.abs((int) (windowOffsetFromTop - yOfHeader)) <= 1;
+    }
+
+    private long getWindowOffsetFromTop() {
+        JavascriptExecutor je = (JavascriptExecutor) driver;
+        return (long) je.executeScript("return window.pageYOffset");
     }
 }
