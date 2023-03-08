@@ -1,6 +1,7 @@
 package org.example;
 
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
+import org.assertj.core.api.SoftAssertions;
 import org.example.pages.CucumberPage;
 import org.example.pages.HomePage;
 import org.testng.annotations.BeforeTest;
@@ -68,5 +69,21 @@ public class CarinaWebTests implements IAbstractTest {
 
         assertThat(homePage.getHeader().isUIObjectPresent()).isTrue();
         assertThat(homePage.isHeaderSticky()).isTrue();
+    }
+
+    @Test
+    public void navigationMenuIsVisibleTest() {
+        String expectedLabelText = "Carina";
+        
+        homePage.open();
+
+        String actualHeadingText = homePage.getContentBlock().getHeadingText();
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(homePage.getNavigationMenu().isUIObjectPresent()).isTrue();
+        soft.assertThat(homePage.getNavigationMenu().getNavMenuLabelText()).isEqualTo(expectedLabelText);
+        soft.assertThat(homePage.getNavigationMenu().getLinksList().size()).isGreaterThan(0);
+        soft.assertThat(homePage.getNavigationMenu().getHighlightedLinkText()).isEqualTo(actualHeadingText);
+        soft.assertAll();
     }
 }
