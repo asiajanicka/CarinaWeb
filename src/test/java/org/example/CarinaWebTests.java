@@ -32,4 +32,14 @@ public class CarinaWebTests implements IAbstractTest {
 
         assertThat(homePage.getContentBlock().getHeadingText()).isEqualTo(expectedHeadingText);
     }
+
+    @Test
+    public void carinaLabelOnHeader() {
+        String expectedLabelText = "Carina";
+
+        homePage.open();
+
+        assertThat(homePage.getHeader().getCarinaLabel().isPresent()).isTrue();
+        assertThat(homePage.getHeader().getCarinaLabelText()).isEqualTo(expectedLabelText);
+    }
 }

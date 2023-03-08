@@ -16,6 +16,9 @@ public class Header extends AbstractUIObject {
     @FindBy(css = ".md-logo")
     private ExtendedWebElement logo;
 
+    @FindBy(css = ".md-header-nav__topic")
+    private ExtendedWebElement carinaLabel;
+
     public Header(WebDriver driver) {
         super(driver);
     }
@@ -31,5 +34,9 @@ public class Header extends AbstractUIObject {
 
     public boolean isLogoOnTheLeft() {
         return isElementOnTheLeft(logo, driver);
+    }
+
+    public String getCarinaLabelText() {
+        return carinaLabel.getText().strip();
     }
 }
