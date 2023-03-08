@@ -31,6 +31,9 @@ public class NavigationMenu extends AbstractUIObject {
     @FindBy(xpath = ".//nav[@aria-label='Integration']/parent::li")
     private ExtendedWebElement integrationLink;
 
+    @FindBy(css = ".md-nav__item--nested")
+    private List<ExtendedWebElement> linksWithSublinksList;
+
     public NavigationMenu(WebDriver driver) {
         super(driver);
     }
@@ -76,5 +79,17 @@ public class NavigationMenu extends AbstractUIObject {
 
     private List<ExtendedWebElement> getSubLinksForLink(ExtendedWebElement el) {
         return el.findExtendedWebElements(By.xpath(".//li"));
+    }
+
+    public NavigationMenu openAllSubMenus() {
+        for (ExtendedWebElement link : linksWithSublinksList) {
+            link.click();
+        }
+        return this;
+    }
+
+    public Content clickLink(int i) {
+        linksList.get(i).click();
+        return new Content(driver);
     }
 }

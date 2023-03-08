@@ -3,6 +3,8 @@ package org.example;
 import com.qaprosoft.carina.core.foundation.IAbstractTest;
 import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebElement;
 import org.assertj.core.api.SoftAssertions;
+import org.example.components.Content;
+import org.example.components.NavigationMenu;
 import org.example.pages.CucumberPage;
 import org.example.pages.HomePage;
 import org.testng.annotations.BeforeTest;
@@ -132,6 +134,32 @@ public class CarinaWebTests implements IAbstractTest {
         for (ExtendedWebElement subLink : subLinksForIntegration) {
             soft.assertThat(subLink.isPresent()).isTrue();
         }
+        soft.assertAll();
+    }
+
+    @Test
+    public void navigationElementsMoveToCorrectPagesTest() {
+        homePage.open();
+        int size = homePage.getNavigationMenu().openAllSubMenus().getLinksList().size();
+
+        SoftAssertions soft = new SoftAssertions();
+
+        for (int i = 0; i < size; i++) {
+            homePage.open();
+            NavigationMenu navigationMenu = homePage.getNavigationMenu().openAllSubMenus();
+
+            String actualLinkLabel = navigationMenu.getLinksList().get(i).getText().strip();
+            Content content = navigationMenu.clickLink(i);
+
+            soft.assertThat(isCurrentPageLoaded(getDriver())).isTrue();
+
+            String highlightedLinkLabel = navigationMenu.getHighlightedLinkText();
+            String headingText = content.getHeadingText();
+
+            soft.assertThat(highlightedLinkLabel).isEqualTo(actualLinkLabel);
+            soft.assertThat(headingText).contains(actualLinkLabel);
+        }
+
         soft.assertAll();
     }
 }
