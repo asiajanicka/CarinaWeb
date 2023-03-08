@@ -5,6 +5,7 @@ import com.qaprosoft.carina.core.foundation.webdriver.decorator.ExtendedWebEleme
 import org.assertj.core.api.SoftAssertions;
 import org.example.components.Content;
 import org.example.components.NavigationMenu;
+import org.example.components.Search;
 import org.example.pages.CucumberPage;
 import org.example.pages.HomePage;
 import org.testng.annotations.BeforeTest;
@@ -160,6 +161,21 @@ public class CarinaWebTests implements IAbstractTest {
             soft.assertThat(headingText).contains(actualLinkLabel);
         }
 
+        soft.assertAll();
+    }
+
+    @Test
+    public void searchComponentsArePresentTest() {
+        String expectedSearchHintText = "Search";
+
+        homePage.open();
+        Search search = homePage.getHeader().getSearchComponent();
+
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(search.isUIObjectPresent()).isTrue();
+        soft.assertThat(search.getSearchIcon().isPresent()).isTrue();
+        soft.assertThat(search.getInputField().isPresent()).isTrue();
+        soft.assertThat(search.getSearchHintText()).isEqualTo(expectedSearchHintText);
         soft.assertAll();
     }
 }

@@ -22,6 +22,9 @@ public class Header extends AbstractUIObject {
     @FindBy(css = "a[href*='github']")
     private ExtendedWebElement githubLink;
 
+    @FindBy(css = ".md-search")
+    private Search searchComponent;
+
     public Header(WebDriver driver) {
         super(driver);
     }
