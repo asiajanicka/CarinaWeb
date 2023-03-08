@@ -19,6 +19,9 @@ public class Header extends AbstractUIObject {
     @FindBy(css = ".md-header-nav__topic")
     private ExtendedWebElement carinaLabel;
 
+    @FindBy(css = "a[href*='github']")
+    private ExtendedWebElement githubLink;
+
     public Header(WebDriver driver) {
         super(driver);
     }
@@ -38,5 +41,9 @@ public class Header extends AbstractUIObject {
 
     public String getCarinaLabelText() {
         return carinaLabel.getText().strip();
+    }
+
+    public void clickGithubLink() {
+        githubLink.click();
     }
 }

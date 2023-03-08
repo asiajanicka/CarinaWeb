@@ -7,6 +7,7 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.Utils.isCurrentPageLoaded;
 
 public class CarinaWebTests implements IAbstractTest {
     HomePage homePage = null;
@@ -41,5 +42,19 @@ public class CarinaWebTests implements IAbstractTest {
 
         assertThat(homePage.getHeader().getCarinaLabel().isPresent()).isTrue();
         assertThat(homePage.getHeader().getCarinaLabelText()).isEqualTo(expectedLabelText);
+    }
+
+    @Test
+    public void githubLinkMovesToProjectPageTest() {
+        String expectedGithubUrl = "https://github.com/zebrunner/carina/";
+
+        homePage.open();
+
+        assertThat(homePage.getHeader().isUIObjectPresent()).isTrue();
+
+        homePage.getHeader().clickGithubLink();
+
+        assertThat(isCurrentPageLoaded(getDriver())).isTrue();
+        assertThat(getDriver().getCurrentUrl()).isEqualTo(expectedGithubUrl);
     }
 }
