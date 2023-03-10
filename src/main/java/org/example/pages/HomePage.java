@@ -26,13 +26,13 @@ public class HomePage extends AbstractPage {
     }
 
     public boolean isHeaderSticky() {
-        long windowOffsetFromTop = getWindowOffsetFromTop();
+        int windowOffsetFromTop = getWindowOffsetFromTop();
         int yOfHeader = header.getRootExtendedElement().getLocation().getY();
-        return Math.abs((int) (windowOffsetFromTop - yOfHeader)) <= 1;
+        return Math.abs((windowOffsetFromTop - yOfHeader)) <= 1;
     }
 
-    private long getWindowOffsetFromTop() {
+    private int getWindowOffsetFromTop() {
         JavascriptExecutor je = (JavascriptExecutor) driver;
-        return (long) je.executeScript("return window.pageYOffset");
+        return (Double.valueOf(je.executeScript("return window.pageYOffset").toString())).intValue();
     }
 }

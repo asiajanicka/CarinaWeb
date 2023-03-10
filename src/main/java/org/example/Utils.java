@@ -14,7 +14,7 @@ public class Utils {
 
     public static boolean isElementOnTheLeft(ExtendedWebElement el, WebDriver driver) {
         JavascriptExecutor je = (JavascriptExecutor) driver;
-        long windowWidth = (long) je.executeScript("return window.innerWidth");
+        int windowWidth = (Double.valueOf(je.executeScript("return window.innerWidth").toString())).intValue();
 
         int elX = el.getLocation().getX();
         int elWidth = el.getSize().getWidth();
