@@ -8,13 +8,14 @@ import org.example.components.NavigationMenu;
 import org.example.components.Search;
 import org.example.pages.CucumberPage;
 import org.example.pages.HomePage;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.example.Utils.isCurrentPageLoaded;
 
 public class CarinaWebTests implements IAbstractTest {
     HomePage homePage = null;
@@ -57,8 +58,10 @@ public class CarinaWebTests implements IAbstractTest {
 
         homePage.getHeader().clickGithubLink();
 
-        assertThat(isCurrentPageLoaded(getDriver())).isTrue();
-        assertThat(getDriver().getCurrentUrl()).isEqualTo(expectedGithubUrl);
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
+        Boolean isGithubPageOpened = wait.until(d -> getDriver().getCurrentUrl().equals(expectedGithubUrl));
+
+        assertThat(isGithubPageOpened).isTrue();
     }
 
     @Test
@@ -139,8 +142,9 @@ public class CarinaWebTests implements IAbstractTest {
         homePage.open();
         int size = homePage.getNavigationMenu().openAllSubMenus().getLinksList().size();
 
-        SoftAssertions soft = new SoftAssertions();
+        WebDriverWait wait = new WebDriverWait(getDriver(), Duration.ofSeconds(5));
 
+        SoftAssertions soft = new SoftAssertions();
         for (int i = 0; i < size; i++) {
             homePage.open();
             NavigationMenu navigationMenu = homePage.getNavigationMenu().openAllSubMenus();
@@ -148,15 +152,14 @@ public class CarinaWebTests implements IAbstractTest {
             String actualLinkLabel = navigationMenu.getLinksList().get(i).getText().strip();
             Content content = navigationMenu.clickLink(i);
 
-            soft.assertThat(isCurrentPageLoaded(getDriver())).isTrue();
-
             String highlightedLinkLabel = navigationMenu.getHighlightedLinkText();
             String headingText = content.getHeadingText();
 
-            soft.assertThat(highlightedLinkLabel).isEqualTo(actualLinkLabel);
+            Boolean isActualLinkHighlighted = wait.until(d -> highlightedLinkLabel.equals(actualLinkLabel));
+
+            soft.assertThat(isActualLinkHighlighted).isTrue();
             soft.assertThat(headingText).contains(actualLinkLabel);
         }
-
         soft.assertAll();
     }
 

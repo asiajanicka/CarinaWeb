@@ -5,9 +5,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Utils {
@@ -20,13 +17,6 @@ public class Utils {
         int elWidth = el.getSize().getWidth();
 
         return ((elX + elWidth) <= (windowWidth / 2));
-    }
-
-    public static boolean isCurrentPageLoaded(WebDriver driver) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
-        return wait.until(webDriver -> ((JavascriptExecutor) webDriver)
-                .executeScript("return document.readyState")
-                .equals("complete"));
     }
 
     public static void scrollToBottom(WebDriver driver) {
