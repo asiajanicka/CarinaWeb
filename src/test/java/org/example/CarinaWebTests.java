@@ -25,20 +25,16 @@ public class CarinaWebTests implements IAbstractTest {
     }
 
     @Test
-    public void logoOnTheLeftTest() {
-        homePage.open();
-
-        assertThat(homePage.getHeader().isLogoOnTheLeft()).isTrue();
-    }
-
-    @Test
-    public void logoMovesToOverviewPageTest() {
+    public void logoTest() {
         String expectedHeadingText = "Overview";
 
         CucumberPage cucumberPage = new CucumberPage(getDriver());
         homePage = cucumberPage.goToPage().getHeader().clickLogo();
 
-        assertThat(homePage.getContentBlock().getHeadingText()).isEqualTo(expectedHeadingText);
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(homePage.getHeader().isLogoOnTheLeft()).isTrue();
+        soft.assertThat(homePage.getContentBlock().getHeadingText()).isEqualTo(expectedHeadingText);
+        soft.assertAll();
     }
 
     @Test
